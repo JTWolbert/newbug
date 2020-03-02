@@ -1,10 +1,9 @@
-package newbug;
+package bug;
 
 import java.awt.event.MouseEvent;
 
-import org.graphstream.graph.Element;
-import org.graphstream.graph.Graph;
 import org.graphstream.graph.Node;
+import org.graphstream.ui.graphicGraph.GraphicElement;
 import org.graphstream.ui.graphicGraph.GraphicGraph;
 import org.graphstream.ui.view.View;
 import org.graphstream.ui.view.util.MouseManager;
@@ -13,31 +12,25 @@ public class MouseClicker implements MouseManager {
 	
 	protected View view; 
 	
-    protected Graph graph;
+    protected GraphicGraph graph;
     
     protected double calx;
     protected double caly;
 
-    protected Element element; 
+    protected GraphicElement element; 
     
     protected int click = -1;
-    protected Element temp;
+    protected GraphicElement temp;
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		if(click == -1)
-		{
-			System.out.println("cally");
-			calibrate(e);
-			return;
-		}
         element = view.findNodeOrSpriteAt(e.getX(), e.getY());
         if(element != null){
         	System.out.println(element.toString());
         	if(click == 0)
         	{
         		temp = element;
-        		element.setAttribute("ui.style", "fill-color: purple;");
+        		element.addAttribute("ui.style", "fill-color: purple;");
         		click++;
         	}
         	else if(click == 1)
@@ -51,25 +44,19 @@ public class MouseClicker implements MouseManager {
         		{
         			graph.addAttribute("start",element);
         			System.out.println(graph.getAttribute("start").toString());
-        			element.setAttribute("ui.style", "fill-color: green;");
+        			element.addAttribute("ui.style", "fill-color: green;");
         		}
         		else
         		{
         			graph.addAttribute("goal",element);
         			System.out.println(graph.getAttribute("goal").toString());
-        			element.setAttribute("ui.style", "fill-color: red;");
+        			element.addAttribute("ui.style", "fill-color: red;");
         			click++;
         		}
         	}
         }
 	}
 	
-	void calibrate(MouseEvent e)
-	{
-		System.out.println(e.getX() + " " + e.getY());
-		System.out.println("click the center of top-left");
-	}
-
 	@Override
 	public void mouseEntered(MouseEvent e) {
 		// TODO Auto-generated method stub
@@ -106,7 +93,8 @@ public class MouseClicker implements MouseManager {
 		
 	}
 
-	public void init(Graph graph, View view) {
+	@Override
+	public void init(GraphicGraph graph, View view) {
         this.graph = graph;
         this.view = view;
         view.addMouseListener(this);
@@ -121,7 +109,7 @@ public class MouseClicker implements MouseManager {
 		
 	}
 	
-	void fillArea(Element a,Element b)
+	void fillArea(GraphicElement a,GraphicElement b)
 	{
 		double ax,ay,bx,by,xx,xy;
 		String[] str = a.toString().split("_");
@@ -160,12 +148,6 @@ public class MouseClicker implements MouseManager {
 		double x = (Double)goal.getAttribute("x") - (Double)n.getAttribute("x");
 		double y = (Double)goal.getAttribute("y") - (Double)n.getAttribute("y");
 		return Math.sqrt(x * x + y * y);
-	}
-
-	@Override
-	public void init(GraphicGraph arg0, View arg1) {
-		// TODO Auto-generated method stub
-		
 	}
 	
 
