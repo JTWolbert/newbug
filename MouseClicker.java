@@ -1,4 +1,4 @@
-package bug;
+package newbug;
 
 import java.awt.event.MouseEvent;
 
@@ -43,13 +43,11 @@ public class MouseClicker implements MouseManager {
         		if(graph.getAttribute("start") == null)
         		{
         			graph.addAttribute("start",element);
-        			System.out.println(graph.getAttribute("start").toString());
         			element.addAttribute("ui.style", "fill-color: green;");
         		}
         		else
         		{
         			graph.addAttribute("goal",element);
-        			System.out.println(graph.getAttribute("goal").toString());
         			element.addAttribute("ui.style", "fill-color: red;");
         			click++;
         		}
@@ -137,8 +135,8 @@ public class MouseClicker implements MouseManager {
 			xy = Double.parseDouble(str[1]);
 			if( xx >= ax && xx <= bx && xy >= ay && xy <= by)
 			{
-				x.setAttribute("ui.style", "fill-color: grey;");
-				x.setAttribute("passable", "no");
+				x.addAttribute("ui.style", "fill-color: grey;");
+				x.addAttribute("passable", "no");
 			}
 		}
 	}
